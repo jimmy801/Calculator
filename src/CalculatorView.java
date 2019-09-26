@@ -19,8 +19,6 @@ import javax.swing.SwingConstants;
  * @author Jimmy801
  */
 public class CalculatorView extends JFrame {
-	/** main calculated Object (Maybe useless?) */
-	private CalculatorModel calModel;
 	/** the place of input value, answers, or temporary calculated value */
 	private JLabel expLbl;
 	/** the place of equation so far */
@@ -38,9 +36,8 @@ public class CalculatorView extends JFrame {
 	 * object constructor
 	 * @param calModel main calculated Object
 	 */
-	public CalculatorView(CalculatorModel calModel) {
+	public CalculatorView() {
 		btns = new ArrayList<JButton>();
-		this.calModel = calModel;
 		initComponents();
 	}
 	
@@ -137,7 +134,8 @@ public class CalculatorView extends JFrame {
 		btnPanel = new JPanel();
 		int w = 4, h = 5;
 		btnPanel.setLayout(new GridLayout(h, w));
-		/** temporary container to save string of buttons by created order<BR>
+		/** 
+		 * temporary container to save string of buttons by created order<BR>
 		 *  if <@link GridLayout> component add elements not by order, it would created out of our exception 
 		*/
 		ArrayList<String>btnStr = new ArrayList<>();

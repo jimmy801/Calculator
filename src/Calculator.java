@@ -11,7 +11,7 @@ public class Calculator {
 			public void run() {
 				try {
 					CalculatorModel calModel = new CalculatorModel();
-					CalculatorView calApp = new CalculatorView(calModel);
+					CalculatorView calApp = new CalculatorView();
 					CalculatorControl calCtrl = new CalculatorControl(calModel, calApp);
 					
 					calApp.setVisible(true);

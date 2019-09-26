@@ -30,6 +30,8 @@ public class CalUtils {
 	public static final String eqStr = "=";
 	/** string of dot button, '.' */
 	public static final String dotStr = ".";
+	/** string of minus symbol, '-' */
+	public static final String minusStr = "-";
 	/*public static final String leftParenthesisStr = "(";
 	public static final String rightParenthesisStr = ")";*/
 	/** infinite string */
@@ -52,7 +54,7 @@ public class CalUtils {
 	 * @return True/False
 	 */
 	public static boolean isZeroOrEmpty(String val) {
-		return isNullOrEmpty(val) || val.equals("0") || trimPointZero(val).equals("0.");
+		return isNullOrEmpty(val) || trimPointZero(val).equals("0");
 	}
 	
 	/**
@@ -71,7 +73,7 @@ public class CalUtils {
 	 * @return True/False
 	 */
 	public static boolean isOperator(String str) {
-		return (CalUtils.addStr + CalUtils.subStr + CalUtils.mulStr + CalUtils.divStr
+		return !isNullOrEmpty(str) && (CalUtils.addStr + CalUtils.subStr + CalUtils.mulStr + CalUtils.divStr
 				/*+ CalUtils.powStr*/).contains(str); 
 	}
 	
@@ -81,12 +83,14 @@ public class CalUtils {
 	 * @return trimmed value string
 	 */
 	public static String trimPointZero(String val) {
-		if(!val.contains(".") || !val.endsWith("0")) return val;
+		if(!val.contains(".")) return val;
 		int end = -1;
 		for(int i = val.length() - 1; i >= 0; i--) {
 			if(val.charAt(i) != '0') break;
 			end = i;
 		}
-		return val.substring(0, end);
+		String tmp = end > 0 ? val.substring(0, end) : val;
+		if(tmp.endsWith(".")) tmp = tmp.substring(0, tmp.length() - 1);
+		return tmp;
 	}
 }
