@@ -193,7 +193,7 @@ public class CalculatorControl {
 				backAction()
 				);
 		
-		// back event
+		// sign event
 		addKeyBind(rootPane, 
 				new KeyStroke[]{ getPressKS(KeyEvent.VK_F9) }, 
 				CalUtils.signStr, 
