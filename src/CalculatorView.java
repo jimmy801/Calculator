@@ -228,7 +228,7 @@ public class CalculatorView extends JFrame {
 	private void initComponents() {
 		this.setLayout(new GridBagLayout()); 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(330, 500));
+        this.setMinimumSize(CalUtils.window_size);
         
         initDisplayPanel();
         

@@ -1,9 +1,13 @@
+import java.awt.Dimension;
+
 /**
  * utils function and value
  * @author Jimmy801
  *
  */
 public class CalUtils {
+	/** window size */
+	public static final Dimension window_size = new Dimension(330, 500);
 	/** string of copy menuItem, "½Æ»s"  */
 	public static final String copyStr = "½Æ»s";
 	/** string of paste menuItem, "¶K¤W" */

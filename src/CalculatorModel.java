@@ -37,11 +37,11 @@ public class CalculatorModel {
 	}
 	
 	public String getInfix() {
-		String res = "";
+		StringBuilder res = new StringBuilder();
 		for(String op : expression) {
-			res += op.contains(CalUtils.minusStr) ? "(" + op + ")" : op;
+			res.append(op.contains(CalUtils.minusStr) ? String.format("(%s)", op) : op);
 		}
-		return res;
+		return res.toString();
 	}
 	
 	private ArrayList<String> getPostfix(){
