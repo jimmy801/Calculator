@@ -193,11 +193,25 @@ public class CalculatorControl {
 				backAction()
 				);
 		
+		// back event
+		addKeyBind(rootPane, 
+				new KeyStroke[]{ getPressKS(KeyEvent.VK_F9) }, 
+				CalUtils.signStr, 
+				signAction()
+				);
+
 		// clear event
 		addKeyBind(rootPane, 
 				new KeyStroke[]{ getPressKS(KeyEvent.VK_ESCAPE) }, 
 				CalUtils.clearStr, 
 				clearAction()
+				);
+		
+		// CE event
+		addKeyBind(rootPane, 
+				new KeyStroke[]{ getPressKS(KeyEvent.VK_DELETE) }, 
+				CalUtils.currentEmptyStr, 
+				ceAction()
 				);
 		
 		// equal event
@@ -412,6 +426,19 @@ public class CalculatorControl {
 	}
 	
 	/**
+	 * registered sign action (กำ)
+	 * @return {@link Action} dotAction
+	 */
+	private Action signAction() {
+		return new AbstractAction() {
+			@Override
+		    public void actionPerformed(ActionEvent e) {
+				signEvent();
+		    }
+		};
+	}
+	
+	/**
 	 * dot action (.)
 	 */
 	private void dotEvent() {
@@ -606,6 +633,20 @@ public class CalculatorControl {
 		if(operand.equals("")) return;
 		operand = "0";
 		calView.setExpLblText(operand);
+	}
+	
+
+	/**
+	 * registered CE button action
+	 * @return {@link Action} backAction
+	 */	
+	private Action ceAction() {
+		return new AbstractAction() {
+			@Override
+		    public void actionPerformed(ActionEvent e) {
+				ceEvent();
+		    }
+		 };
 	}
 	
 	/**
