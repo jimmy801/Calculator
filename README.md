@@ -1,4 +1,4 @@
 Calculator
 =======================
-Introduction :<
+Introduction
 ---
