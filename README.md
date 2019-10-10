@@ -25,7 +25,7 @@ UML Class Diagram
 
 
 
-Screen Shot
+Screenhot
 --
 ![](https://i.imgur.com/SJXJBcY.jpg)
 
