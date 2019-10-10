@@ -18,6 +18,12 @@ System Architecture
 - [View](https://github.com/jimmy801/Calculator/blob/master/src/CalculatorView.java) - 以GUI呈現給使用者
 - [Control](https://github.com/jimmy801/Calculator/blob/master/src/CalculatorControl.java) – 接收使用者輸入給View呈現，將輸入資料送往Model運算
 
+UML Class Diagram
+--
+![](https://i.imgur.com/d41QHKo.jpg)
+
+
+
 Screen Shot
 --
 ![](https://i.imgur.com/SJXJBcY.jpg)
