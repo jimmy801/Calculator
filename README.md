@@ -20,11 +20,12 @@ System Architecture
 
 UML Class Diagram
 --
-![](https://i.imgur.com/d41QHKo.jpg)
+![](https://i.imgur.com/jRJ9MZD.jpg)
 
 
 
-Screenshot
+
+Screen Shot
 --
 ![](https://i.imgur.com/SJXJBcY.jpg)
 
