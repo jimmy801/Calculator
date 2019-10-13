@@ -87,7 +87,7 @@ public class CalculatorModel {
 	}
 	
 	public boolean parse(String input) {
-		String exp = input.replaceAll("[\\s¡@\t,]", "");
+		String exp = input.replaceAll("[\\s\\u3000\t,]", "");
 		String regex = String.format("[\\d%s]", "\\" +  CalUtils.addStr + CalUtils.subStr + "\\" + CalUtils.minusStr +
 				"\\*" +  CalUtils.mulStr + CalUtils.divStr + "\\/" + "\\" + CalUtils.dotStr + CalUtils.eqStr);
 		if(!exp.replaceAll(regex, "").isEmpty()) return false;
