@@ -1,9 +1,13 @@
+import java.awt.Dimension;
+
 /**
  * utils function and value
  * @author Jimmy801
  *
  */
 public class CalUtils {
+	/** window size */
+	public static final Dimension window_size = new Dimension(330, 500);
 	/** string of copy menuItem, "½Æ»s"  */
 	public static final String copyStr = "½Æ»s";
 	/** string of paste menuItem, "¶K¤W" */
@@ -73,8 +77,11 @@ public class CalUtils {
 	 * @return True/False
 	 */
 	public static boolean isOperator(String str) {
-		return !isNullOrEmpty(str) && (CalUtils.addStr + CalUtils.subStr + CalUtils.mulStr + CalUtils.divStr
-				/*+ CalUtils.powStr*/).contains(str); 
+		return !isNullOrEmpty(str) && getOperators().contains(str); 
+	}
+	
+	public static String getOperators() {
+		return CalUtils.addStr + CalUtils.subStr + CalUtils.mulStr + CalUtils.divStr;
 	}
 	
 	/**
