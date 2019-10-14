@@ -12,6 +12,8 @@ public class CalUtils {
 	public static final String copyStr = "½Æ»s";
 	/** string of paste menuItem, "¶K¤W" */
 	public static final String pasteStr = "¶K¤W";
+	/** string of invalid paste input, "Invalid Input" */
+	public static final String invalidStr = "Invalid Input";
 	/** string of clear button, 'C' */
 	public static final String clearStr = "C";
 	/** string of current empty(CE) button, 'CE' */

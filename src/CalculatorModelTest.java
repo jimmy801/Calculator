@@ -20,9 +20,7 @@ class CalculatorModelTest {
 	
 	@Test
 	void test() {
-		cm.push("50");
-		cm.push("+");
-		assertTrue(cm.tryParse("1+5--1+2"));
+		assertTrue(cm.tryParse("1.1*2.2"));
 	}
 
 }

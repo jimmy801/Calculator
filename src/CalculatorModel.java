@@ -94,7 +94,10 @@ public class CalculatorModel {
 				num += e;
 			} else {
 				strs.add(num);
-				strs.add(e.equals(CalUtils.minusStr) ? CalUtils.subStr : e);
+				if(e.equals("-")) strs.add(CalUtils.subStr);
+				else if(e.equals("*")) strs.add(CalUtils.mulStr);
+				else if(e.equals("/")) strs.add(CalUtils.divStr);
+				else strs.add(e);
 				num = "";
 			}
 		}
@@ -107,7 +110,6 @@ public class CalculatorModel {
 		String exp = input.replaceAll("[\\s\\u3000\t,]", "");
 		ArrayList<String>parseStr = parseAndSplitString(exp);
 		expression.addAll(parseStr);
-		calculate();
 	}
 	
 	public boolean tryParse(String input) {
@@ -119,7 +121,7 @@ public class CalculatorModel {
 		Stack<String> stk = new Stack();
 		ArrayList<String>parseStr = parseAndSplitString(exp);
 		stk.addAll(expression);
-		if(stk.peek().replaceAll("[\\d\\.]", "").isEmpty() && parseStr.get(0).replaceAll("[\\d\\.]", "").isEmpty()) {
+		if(!stk.isEmpty() && stk.peek().replaceAll("[\\d\\.]", "").isEmpty() && parseStr.get(0).replaceAll("[\\d\\.]", "").isEmpty()) {
 			stk.clear();
 		}
 		stk.addAll(parseStr);
