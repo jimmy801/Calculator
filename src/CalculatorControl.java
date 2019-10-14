@@ -276,6 +276,12 @@ public class CalculatorControl {
 					calView.setExpLblText(CalUtils.invalidStr);
 				} else {
 					calModel.parse(pasteStr);
+					if(calModel.top().equals(CalUtils.eqStr)) {
+						calModel.pop();
+						operand = calModel.pop();
+						eqEvent();
+						return;
+					}
 					operand = calModel.pop();
 					calView.setExpLblText(operand);
 					calView.setPreLblText(calModel.getInfix());

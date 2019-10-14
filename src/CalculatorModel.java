@@ -127,6 +127,8 @@ public class CalculatorModel {
 		stk.addAll(parseStr);
 		
 		try {
+			if(stk.peek().equals(CalUtils.eqStr))
+				stk.pop();
 			calculate(stk);
 		} 
 		catch(Exception e){
