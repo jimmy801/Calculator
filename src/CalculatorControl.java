@@ -41,7 +41,7 @@ public class CalculatorControl {
 	/** index of insertion to calculator model (maybe useless?) */
 	private int pos;
 	/** enum for menuItem */
-	enum MI { copy, paste }
+	enum MI { COPY, PASTE }
 	
 	/**
 	 * object constructor
@@ -62,8 +62,8 @@ public class CalculatorControl {
 		// register mouse event
 		calView.getDisplayPanel().addMouseListener(mouseEvent());
 		// register copy & paste menuItem of pm click event
-		calView.getPM().getItem(MI.copy.ordinal()).addActionListener(copyActionListener());
-		calView.getPM().getItem(MI.paste.ordinal()).addActionListener(pasteActionListener());
+		calView.getPM().getItem(MI.COPY.ordinal()).addActionListener(copyActionListener());
+		calView.getPM().getItem(MI.PASTE.ordinal()).addActionListener(pasteActionListener());
 		
 		initValue();
 		
@@ -78,6 +78,17 @@ public class CalculatorControl {
 		}
 	}
 	
+	private void setBtnsEnable(boolean enable) {
+		String txt;
+		for(JButton btn: calView.getBtns()) {
+			txt = btn.getText();
+			if(!CalUtils.isDigit(txt) && !txt.equals(CalUtils.clearStr) && !txt.equals(CalUtils.currentEmptyStr)
+					 && !txt.equals(CalUtils.backStr) && !txt.equals(CalUtils.eqStr)) {
+				btn.setEnabled(enable);
+			}
+		}
+	}
+	
 	/**
 	 * initial calculator
 	 */
@@ -87,6 +98,7 @@ public class CalculatorControl {
 		calView.setExpLblText("0");
 		operator = "";
 		operand = "0";
+		setBtnsEnable(true);
 		pos = 0;
 	}
 	
@@ -256,9 +268,18 @@ public class CalculatorControl {
 		if (pasteData == null) return;
 		try {
 			if (pasteData.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-				String s = (String)(pasteData.getTransferData(DataFlavor.stringFlavor));
+				String pasteStr = (String)(pasteData.getTransferData(DataFlavor.stringFlavor));
 				// parse pasted string is valid equation or not
-				//calModel.parse(s);
+				if(!calModel.tryParse(pasteStr)) {
+					setBtnsEnable(false);
+					calView.setPreLblText("");
+					calView.setExpLblText(CalUtils.invalidStr);
+				} else {
+					calModel.parse(pasteStr);
+					operand = calModel.pop();
+					calView.setExpLblText(operand);
+					calView.setPreLblText(calModel.getInfix());
+				}
 			}
 		} catch (UnsupportedFlavorException ex) {
 			ex.printStackTrace();
@@ -326,6 +347,10 @@ public class CalculatorControl {
 	 * @param digit input number 
 	 */
 	private void numAction(String digit) {
+		String nowStr = calView.getExpLblText();
+		if(nowStr.equals(CalUtils.invalidStr) || nowStr.equals(CalUtils.infStr)) {
+			clearEvent();
+		}
 		// previous input is operator, then clear it and set operand to input
 		if(!CalUtils.isNullOrEmpty(operator)) {
 			// previous operator is '=', and input new number without clear,
@@ -479,6 +504,12 @@ public class CalculatorControl {
 	 */
 	private void eqEvent() {
 		//if(CalUtils.isZeroOrEmpty(operand)) return;
+		String nowStr = calView.getExpLblText();
+		if(nowStr.equals(CalUtils.invalidStr) || nowStr.equals(CalUtils.infStr)) {
+			clearEvent();
+			return;
+		}
+		
 		calModel.push(CalUtils.trimPointZero(operand));
 		// use calModel to calculate the answer of equation
 		String answer = calModel.calculate();
@@ -560,6 +591,12 @@ public class CalculatorControl {
 	 */
 	private void backEvent() {
 		if(CalUtils.isNullOrEmpty(operand)) return;
+		String nowStr = calView.getExpLblText();
+		if(nowStr.equals(CalUtils.invalidStr) || nowStr.equals(CalUtils.infStr)) {
+			clearEvent();
+			return;
+		}
+		
 		operand = operand.substring(0, operand.length() - 1);
 		if(CalUtils.isNullOrEmpty(operand) || operand.equals("-"))
 			operand = "0";
@@ -631,6 +668,12 @@ public class CalculatorControl {
 	 */
 	private void ceEvent() {
 		if(operand.equals("")) return;
+		String nowStr = calView.getExpLblText();
+		if(nowStr.equals(CalUtils.invalidStr) || nowStr.equals(CalUtils.infStr)) {
+			clearEvent();
+			return;
+		}
+			
 		operand = "0";
 		calView.setExpLblText(operand);
 	}
