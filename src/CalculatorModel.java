@@ -86,31 +86,48 @@ public class CalculatorModel {
 		return calculate(expression);
 	}
 	
-	public boolean parse(String input) {
+	public ArrayList<String> parseAndSplitString(String exp) {
+		ArrayList<String>strs = new ArrayList<>();
+		String num = "";		
+		for(String e: exp.split("")) {
+			if((num.isEmpty() && e.equals(CalUtils.minusStr)) || e.matches("[\\d\\.]")) {
+				num += e;
+			} else {
+				strs.add(num);
+				strs.add(e.equals(CalUtils.minusStr) ? CalUtils.subStr : e);
+				num = "";
+			}
+		}
+		if(!CalUtils.isNullOrEmpty(num)) strs.add(num);
+
+		return strs;
+	}
+	
+	public void parse(String input) {
+		String exp = input.replaceAll("[\\s\\u3000\t,]", "");
+		ArrayList<String>parseStr = parseAndSplitString(exp);
+		expression.addAll(parseStr);
+		calculate();
+	}
+	
+	public boolean tryParse(String input) {
 		String exp = input.replaceAll("[\\s\\u3000\t,]", "");
 		String regex = String.format("[\\d%s]", "\\" +  CalUtils.addStr + CalUtils.subStr + "\\" + CalUtils.minusStr +
 				"\\*" +  CalUtils.mulStr + CalUtils.divStr + "\\/" + "\\" + CalUtils.dotStr + CalUtils.eqStr);
 		if(!exp.replaceAll(regex, "").isEmpty()) return false;
 		
 		Stack<String> stk = new Stack();
+		ArrayList<String>parseStr = parseAndSplitString(exp);
 		stk.addAll(expression);
-		
-		String num = "";
-		
-		for(String e: exp.split("")) {
-			if((num.isEmpty() && e.equals(CalUtils.minusStr)) || e.matches("[\\d\\.]")) {
-				num += e;
-			} else {
-				stk.add(num);
-				stk.add(e.equals(CalUtils.minusStr) ? CalUtils.subStr : e);
-				num = "";
-			}
+		if(stk.peek().replaceAll("[\\d\\.]", "").isEmpty() && parseStr.get(0).replaceAll("[\\d\\.]", "").isEmpty()) {
+			stk.clear();
 		}
-		if(!CalUtils.isNullOrEmpty(num)) stk.add(num);
+		stk.addAll(parseStr);
 		
 		try {
 			calculate(stk);
-		} catch(Exception e){
+		} 
+		catch(Exception e){
 			return false;
 		}
 		

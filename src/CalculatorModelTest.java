@@ -22,7 +22,7 @@ class CalculatorModelTest {
 	void test() {
 		cm.push("50");
 		cm.push("+");
-		assertTrue(cm.parse("132--456"));
+		assertTrue(cm.tryParse("1+5--1+2"));
 	}
 
 }
