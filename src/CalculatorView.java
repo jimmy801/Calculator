@@ -132,7 +132,7 @@ public class CalculatorView extends JFrame {
 	 */
 	private void initBtnPanel() {
 		btnPanel = new JPanel();
-		int w = 4, h = 5;
+		int w = 4, h = 6;
 		btnPanel.setLayout(new GridLayout(h, w));
 		/** 
 		 * temporary container to save string of buttons by created order<BR>
@@ -169,11 +169,10 @@ public class CalculatorView extends JFrame {
 		btnStr.add("0");
 		btnStr.add(CalUtils.dotStr);
 		btnStr.add(CalUtils.eqStr);
-		/*
+		
 		// '(' and ')' buttons, a little troublesome 
 		btnStr.add(CalUtils.leftParenthesisStr);
 		btnStr.add(CalUtils.rightParenthesisStr);
-		*/
 		
 		// create buttons
 		for(String str: btnStr) {

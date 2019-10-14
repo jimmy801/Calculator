@@ -38,8 +38,10 @@ public class CalUtils {
 	public static final String dotStr = ".";
 	/** string of minus symbol, '-' */
 	public static final String minusStr = "-";
-	/*public static final String leftParenthesisStr = "(";
-	public static final String rightParenthesisStr = ")";*/
+	/** string of leftParenthesis button, '(' */
+	public static final String leftParenthesisStr = "(";
+	/** string of rightParenthesisStr button, ')' */
+	public static final String rightParenthesisStr = ")";
 	/** infinite string */
 	public static final String infStr = "Inf.";
 	/** not a number string */
