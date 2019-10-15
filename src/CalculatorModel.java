@@ -3,75 +3,74 @@ import java.util.Stack;
 
 public class CalculatorModel {
 	Stack<String> expression;
-	
-	public CalculatorModel(){
+
+	public CalculatorModel() {
 		initialize();
 	}
-	
+
 	private void initialize() {
 		expression = new Stack<String>();
 	}
-	
+
 	public boolean isEmpty() {
 		return expression.isEmpty();
 	}
-	
+
 	public void clear() {
 		expression.clear();
 	}
-	
+
 	public void set(String element, int index) {
 		expression.set(index, element);
 	}
-	
+
 	public void push(String element) {
 		expression.add(element);
 	}
-	
+
 	public String pop() {
 		return expression.pop();
 	}
-	
+
 	public String top() {
 		return expression.peek();
 	}
-	
+
 	public String getInfix() {
 		StringBuilder res = new StringBuilder();
-		for(String op : expression) {
+		for (String op : expression) {
 			res.append(op.contains(CalUtils.minusStr) ? String.format("(%s)", op) : op);
 		}
 		return res.toString();
 	}
-	
-	private ArrayList<String> getPostfix(Stack<String> expre){
+
+	private ArrayList<String> getPostfix(Stack<String> expre) {
 		System.out.println(expre);
 		Stack<String> tmp = new Stack<String>();
 		ArrayList<String> postfix = new ArrayList<String>();
-		for(int i = 0; i < expre.size(); ++i) {
-			if(i % 2 == 0) {
+		for (int i = 0; i < expre.size(); ++i) {
+			if (i % 2 == 0) {
 				postfix.add(expre.get(i));
 			} else {
 				String operator = expre.get(i);
-				while(!tmp.isEmpty() && priority(tmp.peek()) >= priority(operator)) {
+				while (!tmp.isEmpty() && priority(tmp.peek()) >= priority(operator)) {
 					postfix.add(tmp.pop());
 				}
 				tmp.add(operator);
 			}
 		}
-		while(!tmp.isEmpty()) {
+		while (!tmp.isEmpty()) {
 			postfix.add(tmp.pop());
 		}
 		System.out.println(postfix);
 		return postfix;
 	}
-	
-	
+
 	public String calculate(Stack<String> expre) {
 		ArrayList<String> postfix = getPostfix(expre);
 		Stack<Float> values = new Stack<Float>();
-		for(String element : postfix) {
-			if(CalUtils.isOperator(element)) {
+		for (String element : postfix) {
+			if (CalUtils.isOperator(element)) {
 				float y = values.pop();
 				float x = values.pop();
 				values.push(evaluate(x, y, element));
@@ -81,76 +80,82 @@ public class CalculatorModel {
 		}
 		return CalUtils.trimPointZero(String.valueOf(values.peek()));
 	}
-	
+
 	public String calculate() {
 		return calculate(expression);
 	}
-	
+
 	public ArrayList<String> parseAndSplitString(String exp) {
-		ArrayList<String>strs = new ArrayList<>();
-		String num = "";		
-		for(String e: exp.split("")) {
-			if((num.isEmpty() && e.equals(CalUtils.minusStr)) || e.matches("[\\d\\.]")) {
+		ArrayList<String> strs = new ArrayList<>();
+		String num = "";
+		for (String e : exp.split("")) {
+			if ((num.isEmpty() && e.equals(CalUtils.minusStr)) || e.matches("[\\d\\.]")) {
 				num += e;
 			} else {
 				strs.add(num);
-				if(e.equals("-")) strs.add(CalUtils.subStr);
-				else if(e.equals("*")) strs.add(CalUtils.mulStr);
-				else if(e.equals("/")) strs.add(CalUtils.divStr);
-				else strs.add(e);
+				if (e.equals("-"))
+					strs.add(CalUtils.subStr);
+				else if (e.equals("*"))
+					strs.add(CalUtils.mulStr);
+				else if (e.equals("/"))
+					strs.add(CalUtils.divStr);
+				else
+					strs.add(e);
 				num = "";
 			}
 		}
-		if(!CalUtils.isNullOrEmpty(num)) strs.add(num);
+		if (!CalUtils.isNullOrEmpty(num))
+			strs.add(num);
 
 		return strs;
 	}
-	
+
 	public void parse(String input) {
 		String exp = input.replaceAll("[\\s\\u3000\t,]", "");
-		ArrayList<String>parseStr = parseAndSplitString(exp);
+		ArrayList<String> parseStr = parseAndSplitString(exp);
 		expression.addAll(parseStr);
 	}
-	
+
 	public boolean tryParse(String input) {
 		String exp = input.replaceAll("[\\s\\u3000\t,]", "");
-		String regex = String.format("[\\d%s]", "\\" +  CalUtils.addStr + CalUtils.subStr + "\\" + CalUtils.minusStr +
-				"\\*" +  CalUtils.mulStr + CalUtils.divStr + "\\/" + "\\" + CalUtils.dotStr + CalUtils.eqStr);
-		if(!exp.replaceAll(regex, "").isEmpty()) return false;
-		
+		String regex = String.format("[\\d%s]", "\\" + CalUtils.addStr + CalUtils.subStr + "\\" + CalUtils.minusStr
+				+ "\\*" + CalUtils.mulStr + CalUtils.divStr + "\\/" + "\\" + CalUtils.dotStr + CalUtils.eqStr);
+		if (!exp.replaceAll(regex, "").isEmpty())
+			return false;
+
 		Stack<String> stk = new Stack();
-		ArrayList<String>parseStr = parseAndSplitString(exp);
+		ArrayList<String> parseStr = parseAndSplitString(exp);
 		stk.addAll(expression);
-		if(!stk.isEmpty() && stk.peek().replaceAll("[\\d\\.]", "").isEmpty() && parseStr.get(0).replaceAll("[\\d\\.]", "").isEmpty()) {
+		if (!stk.isEmpty() && stk.peek().replaceAll("[\\d\\.]", "").isEmpty()
+				&& parseStr.get(0).replaceAll("[\\d\\.]", "").isEmpty()) {
 			stk.clear();
 		}
 		stk.addAll(parseStr);
-		
+
 		try {
-			if(stk.peek().equals(CalUtils.eqStr))
+			if (stk.peek().equals(CalUtils.eqStr))
 				stk.pop();
 			calculate(stk);
-		} 
-		catch(Exception e){
+		} catch (Exception e) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	private static float evaluate(float x, float y, String operator) {
-		if(operator.equals(CalUtils.addStr)) {
+		if (operator.equals(CalUtils.addStr)) {
 			return x + y;
-		} else if(operator.equals(CalUtils.subStr)) {
+		} else if (operator.equals(CalUtils.subStr)) {
 			return x - y;
-		} else if(operator.equals(CalUtils.mulStr)) {
+		} else if (operator.equals(CalUtils.mulStr)) {
 			return x * y;
-		} else if(operator.equals(CalUtils.divStr)) {
+		} else if (operator.equals(CalUtils.divStr)) {
 			return x / y;
 		}
 		return 0;
 	}
-	
+
 	private static int priority(String operator) {
 		return operator.equals(CalUtils.addStr) || operator.equals(CalUtils.subStr) ? 0 : 1;
 	}

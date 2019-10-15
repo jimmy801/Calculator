@@ -1,7 +1,8 @@
 import java.awt.EventQueue;
 
 /**
- * EntryPoint of this Simple Calculator 
+ * EntryPoint of this Simple Calculator
+ * 
  * @author Jimmy801
  */
 
@@ -13,7 +14,7 @@ public class Calculator {
 					CalculatorModel calModel = new CalculatorModel();
 					CalculatorView calApp = new CalculatorView();
 					CalculatorControl calCtrl = new CalculatorControl(calModel, calApp);
-					
+
 					calApp.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
