@@ -199,6 +199,14 @@ public class CalculatorView extends JFrame {
 		}
 	}
 
+	private JButton transparentBtn(String text) {
+		JButton btn = new JButton(text);
+		btn.setOpaque(false);
+		btn.setContentAreaFilled(false);
+		btn.setBorderPainted(false);
+		return btn;
+	}
+
 	/**
 	 * initial display components & its container
 	 */
@@ -207,23 +215,25 @@ public class CalculatorView extends JFrame {
 		displayPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
 		int expLblMaxFont = 70, expLblMinFont = 20;
 		expLbl = new ResizeLabelFont("0", SwingConstants.RIGHT);
+		expLbl.setVerticalAlignment(SwingConstants.BOTTOM);
 		expLbl.setMaxFontSize(expLblMaxFont);
 		expLbl.setMinFontSize(expLblMinFont);
-		expLbl.setVerticalAlignment(SwingConstants.BOTTOM);
 		expLbl.setFont(new Font(fontName, Font.BOLD, expLblMaxFont));
 		displayPanel.add(expLbl, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		int preLblMaxFont = 30, preLblMinFont = 10;
 		preLbl = new ResizeLabelFont("", SwingConstants.RIGHT);
 		preLbl.setVerticalAlignment(SwingConstants.BOTTOM);
-		int preLblMaxFont = 30, preLblMinFont = 10;
 		preLbl.setMaxFontSize(preLblMaxFont);
 		preLbl.setMinFontSize(preLblMinFont);
 		preLbl.setFont(new Font(fontName, Font.BOLD, preLblMaxFont));

@@ -23,11 +23,6 @@ public class ResizeLabelFont extends JLabel {
 	/** custom maximum font size */
 	private int MAX_FONT_SIZE = 240;
 
-	/*
-	 * private boolean leftArrowShow; private boolean rightArrowShow; private int
-	 * startPos; private Point cursorPos;
-	 */
-
 	/**
 	 * Creates a ResizeLabelFont instance with the specified text and horizontal
 	 * alignment.
@@ -73,12 +68,18 @@ public class ResizeLabelFont extends JLabel {
 	}
 
 	/**
+	 * Get current label text size
+	 * 
+	 * @return label text size
+	 */
+	public Dimension getTextSize() {
+		return getTextSize(this.getText(), this.getFont());
+	}
+
+	/**
 	 * Initialize function, register listeners.
 	 */
 	protected void init() {
-		/*
-		 * startPos = 0; leftArrowShow = rightArrowShow = false;
-		 */
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				adaptLabelFont();
@@ -90,12 +91,6 @@ public class ResizeLabelFont extends JLabel {
 				adaptLabelFont();
 			}
 		});
-		/*
-		 * this.addMouseMotionListener(new MouseAdapter() {
-		 * 
-		 * @Override public void mouseMoved(MouseEvent e) { cursorPos = e.getPoint();
-		 * repaint(); } })
-		 */;
 	}
 
 	/**
@@ -142,38 +137,4 @@ public class ResizeLabelFont extends JLabel {
 
 		return size;
 	}
-
-	/*
-	 * private void drawArrows(boolean isLeft, Graphics g) { String text = isLeft ?
-	 * "〈" : "〉"; Dimension arrowSize = getTextSize(text, this.getFont()); int x =
-	 * isLeft ? -arrowSize.width / 2 + 10 : this.getWidth() - arrowSize.width / 2 -
-	 * 10, y = this.getLocation().y + arrowSize.height * 2 / 3; Rectangle rec = new
-	 * Rectangle(new Point(x, this.getLocation().y), arrowSize); boolean arrowShow =
-	 * isLeft ? leftArrowShow : rightArrowShow; System.out.println(rec);
-	 * System.out.println(cursorPos); System.out.println(rec.contains(cursorPos));
-	 * // System.out.println(rec.contains(new Point(300, 61)));
-	 * System.out.println(); if (arrowShow && rec.contains(cursorPos) ) {
-	 * g.setColor(Color.cyan); g.drawRect(rec.x, rec.y, arrowSize.width,
-	 * arrowSize.height); }
-	 * 
-	 * g.setColor(this.getForeground()); g.setFont(this.getFont());
-	 * g.drawString(text, x, y); }
-	 * 
-	 * private void drawLeftArrow(Graphics g) { if (leftArrowShow) drawArrows(true,
-	 * g); }
-	 * 
-	 * private void drawRightArrow(Graphics g) { if (rightArrowShow)
-	 * drawArrows(false, g); }
-	 */
-
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		/*
-		 * Dimension textSize = getTextSize(this.getText(), this.getFont()); boolean
-		 * outOfRange = textSize.width > this.getWidth(); leftArrowShow = startPos > 0
-		 * && outOfRange; rightArrowShow = textSize.width - startPos > this.getWidth()
-		 * && outOfRange; drawLeftArrow(g); drawRightArrow(g);
-		 */
-	}
-
 }
