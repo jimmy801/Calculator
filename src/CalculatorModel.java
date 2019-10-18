@@ -226,16 +226,27 @@ public class CalculatorModel {
 	 * @return the result of x operator y
 	 */
 	private static float evaluate(float x, float y, String operator) {
-		if (operator.equals(CalUtils.addStr)) {
-			return x + y;
-		} else if (operator.equals(CalUtils.subStr)) {
-			return x - y;
-		} else if (operator.equals(CalUtils.mulStr)) {
-			return x * y;
-		} else if (operator.equals(CalUtils.divStr)) {
-			return x / y;
-		}
-		return 0;
+		
+		
+	
+			if( y ==0 && operator.equals(CalUtils.divStr) )
+			{
+				throw new ArithmeticException();
+			}
+			  else if (operator.equals(CalUtils.addStr)) {
+				return x + y;
+			} else if (operator.equals(CalUtils.subStr)) {
+				return x - y;
+			} else if (operator.equals(CalUtils.mulStr)) {
+				return x * y;
+			} else if (operator.equals(CalUtils.divStr)) {
+				return x / y;
+			}
+			return 0;
+			
+		
+		
+		
 	}
 
 	/**
