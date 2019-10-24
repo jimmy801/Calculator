@@ -119,14 +119,14 @@ public class CalculatorModel {
 	 */
 	public String calculate(Stack<String> expre) {
 		ArrayList<String> postfix = getPostfix(expre);
-		Stack<Float> values = new Stack<Float>();
+		Stack<Double> values = new Stack<Double>();
 		for (String element : postfix) {
 			if (CalUtils.isOperator(element)) {
-				float y = values.pop();
-				float x = values.pop();
+				double y = values.pop();
+				double x = values.pop();
 				values.push(evaluate(x, y, element));
 			} else {
-				values.push(Float.valueOf(element));
+				values.push(Double.valueOf(element));
 			}
 		}
 		return CalUtils.trimPointZero(String.valueOf(values.peek()));
@@ -225,7 +225,7 @@ public class CalculatorModel {
 	 * @param operator - operator of 2 parameters
 	 * @return the result of x operator y
 	 */
-	private static float evaluate(float x, float y, String operator) {
+	private static double evaluate(double x, double y, String operator) {
 		
 		
 	
