@@ -1,4 +1,4 @@
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -120,14 +120,14 @@ public class CalculatorModel {
 	 */
 	public String calculate(Stack<String> expre) {
 		ArrayList<String> postfix = getPostfix(expre);
-		Stack<BigInteger> values = new Stack<BigInteger>();
+		Stack<BigDecimal> values = new Stack<BigDecimal>();
 		for (String element : postfix) {
 			if (CalUtils.isOperator(element)) {
-				BigInteger y = values.pop();
-				BigInteger x = values.pop();
+				BigDecimal y = values.pop();
+				BigDecimal x = values.pop();
 				values.push(evaluate(x, y, element));
 			} else {
-				values.push(new BigInteger(element));
+				values.push(new BigDecimal(element));
 			}
 		}
 		return CalUtils.trimPointZero(String.valueOf(values.peek()));
@@ -226,8 +226,8 @@ public class CalculatorModel {
 	 * @param operator - operator of 2 parameters
 	 * @return the result of x operator y
 	 */
-	private static BigInteger evaluate(BigInteger x, BigInteger y, String operator) {
-		if (y.equals(BigInteger.ZERO) && operator.equals(CalUtils.divStr)) {
+	private static BigDecimal evaluate(BigDecimal x, BigDecimal y, String operator) {
+		if (y.equals(BigDecimal.ZERO) && operator.equals(CalUtils.divStr)) {
 			throw new ArithmeticException();
 		} else if (operator.equals(CalUtils.addStr)) {
 			return x.add(y);
@@ -238,7 +238,7 @@ public class CalculatorModel {
 		} else if (operator.equals(CalUtils.divStr)) {
 			return x.divide(y);
 		}
-		return BigInteger.ZERO;
+		return BigDecimal.ZERO;
 	}
 
 	/**
