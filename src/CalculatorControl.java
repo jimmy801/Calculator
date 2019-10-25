@@ -492,12 +492,8 @@ public class CalculatorControl {
 	 * equal action
 	 */
 	private void eqEvent() {
-		
 		String answer = "";
-		
-		
 		try {
-		
 			// if(CalUtils.isZeroOrEmpty(operand)) return;
 			String nowStr = calView.getExpLblText();
 			if (nowStr.equals(CalUtils.invalidStr) || nowStr.equals(CalUtils.infStr)) {
@@ -510,22 +506,17 @@ public class CalculatorControl {
 			answer = calModel.calculate();
 			// because input would be 1+2=*3, use previous answer and continue calculate,
 			// answer must push again after clear calModel
-			
 		}
-		
-		catch( ArithmeticException e)
-		{
-			answer = "divided by zero" ;
+		catch (ArithmeticException e) {
+			answer = CalUtils.div0;
 		}
-		
-		
+
 		calView.setPreLblText(calModel.getInfix() + CalUtils.eqStr);
 		initValue();
 		operand = answer;
 		operator = CalUtils.eqStr;
 		calView.setExpLblText(answer);
-		
-		
+		setBtnsEnable(!operand.equals(CalUtils.div0));
 	}
 
 	/**
