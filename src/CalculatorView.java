@@ -221,7 +221,7 @@ public class CalculatorView extends JFrame {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
-		int expLblMaxFont = 70, expLblMinFont = 20;
+		int expLblMaxFont = 70, expLblMinFont = 13;
 		expLbl = new ResizeLabelFont("0", SwingConstants.RIGHT);
 		expLbl.setVerticalAlignment(SwingConstants.BOTTOM);
 		expLbl.setMaxFontSize(expLblMaxFont);
