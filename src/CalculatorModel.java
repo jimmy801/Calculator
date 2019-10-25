@@ -13,6 +13,8 @@ public class CalculatorModel {
 
 	/** save all digits & operators */
 	private Stack<String> expression;
+	/** round digit */
+	private int roundDigit = 20;
 
 	/**
 	 * objector constructor
@@ -22,10 +24,34 @@ public class CalculatorModel {
 	}
 
 	/**
+	 * objector constructor
+	 */
+	public CalculatorModel(int roundDigit) {
+		initialize();
+		this.roundDigit = roundDigit;
+	}
+
+	/**
 	 * initialize function
 	 */
 	private void initialize() {
 		expression = new Stack<String>();
+	}
+	
+	/**
+	 * set max digits of float compute
+	 * @param roundDigit - max float digit to set
+	 */
+	private void setRoundDigit(int roundDigit) {
+		this.roundDigit = roundDigit;
+	}
+	
+	/**
+	 * get  max digits of float compute
+	 * @return max float digit
+	 */
+	private int getRoundDigit() {
+		return roundDigit;
 	}
 
 	/**
@@ -236,7 +262,7 @@ public class CalculatorModel {
 		} else if (operator.equals(CalUtils.mulStr)) {
 			return x.multiply(y);
 		} else if (operator.equals(CalUtils.divStr)) {
-			return x.divide(y);
+			return x.divide(y, 20, BigDecimal.ROUND_CEILING);
 		}
 		return BigDecimal.ZERO;
 	}
